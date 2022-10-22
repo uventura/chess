@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <array>
+#include <iostream>
 
 class Board
 {
@@ -10,8 +11,18 @@ class Board
         uint32_t m_house_size;
         std::array<uint8_t, 3> m_white;
         std::array<uint8_t, 3> m_black;
+        std::array<std::array<bool, 8>, 8> m_house_color;
+        sf::Clock m_clock;
 
-        sf::RectangleShape getPieceHouse(sf::Color color, float pos_x, float pos_y);
+        sf::Event m_event;
+
+        sf::RectangleShape getPieceHouse(
+            sf::Color color,
+            float pos_x,
+            float pos_y
+        );
+        void displayBoard();
+        void eventBoard();
     public:
         Board(
             sf::RenderWindow* window,

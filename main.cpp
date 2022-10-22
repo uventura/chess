@@ -25,10 +25,11 @@
 int main()
 {
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(400, 400), "SFML window");
+    sf::RenderWindow window(sf::VideoMode(400, 400), "Chess");
     // Load a sprite to display
     // sf::Texture texture;
-    // if (!texture.loadFromFile("resources/textures/board.jpeg"))
+    // texture.setSmooth(true);
+    // if (!texture.loadFromFile("resources/textures/pieces.png"))
     //     return EXIT_FAILURE;
     // sf::Sprite sprite(texture);
     // // Create a graphical text to display
@@ -42,7 +43,12 @@ int main()
     // Start the game loop
 
     sf::Event event;
-    Board board(&window);
+    Board board(
+        &window,
+        50,
+        {86,61,45},
+        {219,200,188}
+    );
 
     while (window.isOpen())
     {
@@ -54,6 +60,17 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+        // if (event.type == sf::Event::MouseButtonPressed)
+        // {
+        //     if (event.mouseButton.button == sf::Mouse::Right)
+        //     {
+        //         std::cout << "the right button was pressed" << std::endl;
+        //         std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+        //         std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+        //     }
+        // }
+
         // Clear screen
         window.clear();
 
@@ -68,6 +85,8 @@ int main()
         }
 
         // Draw the sprite
+        // sprite.setScale(sf::Vector2f(0.25f, 0.25f));
+        // sprite.setTextureRect(sf::IntRect(0, 0, 200, 200));
         // window.draw(sprite);
         // Draw the string
         // window.draw(text);
