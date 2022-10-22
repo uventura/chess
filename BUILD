@@ -1,10 +1,3 @@
-cc_library(
-    name = "hdrs",
-    srcs = [
-        "stb_perlin.h"
-    ]
-)
-
 cc_binary(
     name = "main",
     srcs = [
@@ -15,6 +8,6 @@ cc_binary(
     ],
     deps = [
         "//third_party/sfml:sfml_linux",
-        ":hdrs"
+        "//lib:chess_lib"
     ],
 )
