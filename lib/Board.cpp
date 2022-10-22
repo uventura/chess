@@ -24,11 +24,6 @@ sf::RectangleShape Board::getPieceHouse(sf::Color color, float pos_x, float pos_
     sf::RectangleShape rectangle;
     rectangle.setSize(sf::Vector2f(m_house_size, m_house_size));
     rectangle.setFillColor(color);
-    // if(!selected)
-    // {
-    //     rectangle.setOutlineColor(color);
-    // }
-    rectangle.setOutlineThickness(2);
     rectangle.setPosition(pos_x, pos_y);
 
     return rectangle;
@@ -66,7 +61,6 @@ void Board::eventBoard()
     &&  m_event.mouseButton.button == sf::Mouse::Left
     && (m_event.mouseButton.x >= 0 && (uint32_t)m_event.mouseButton.x < m_house_size * 8)
     && (m_event.mouseButton.y >= 0 && (uint32_t)m_event.mouseButton.y < m_house_size * 8)
-    // &&  elapsed.asMilliseconds() >= 400
     )
     {
         for(int x = 0; x < 8; ++x)

@@ -1,48 +1,28 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-// #include <SFML/Color.hpp>
 
 #include <iostream>
+#include <string>
+#include <vector>
 
 #include "lib/Board.hpp"
-
-// struct pieceHouse{
-//     public:
-//         pieceHouse(color);
-// }
-
-// sf::RectangleShape getPieceHouse(sf::Color color, float pos_x, float pos_y)
-// {
-//     sf::RectangleShape rectangle;
-//     rectangle.setSize(sf::Vector2f(50, 50));
-//     rectangle.setFillColor(color);
-//     rectangle.setOutlineThickness(0);
-//     rectangle.setPosition(pos_x, pos_y);
-
-//     return rectangle;
-// }
+#include "lib/Piece.hpp"
 
 int main()
 {
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(400, 400), "Chess");
-    // Load a sprite to display
-    // sf::Texture texture;
-    // texture.setSmooth(true);
-    // if (!texture.loadFromFile("resources/textures/pieces.png"))
-    //     return EXIT_FAILURE;
-    // sf::Sprite sprite(texture);
-    // // Create a graphical text to display
-    // sf::Font font;
-    // if (!font.loadFromFile("arial.ttf"))
-    //     return EXIT_FAILURE;
-    // sf::Text text("Hello SFML", font, 50);
 
-    // Play the music
-    // music.play();
-    // Start the game loop
+    // Load a sprite to display
+    sf::Texture pieces_texture;
+    pieces_texture.setSmooth(true);
+    if (!pieces_texture.loadFromFile("resources/textures/pieces.png"))
+        return EXIT_FAILURE;
+    sf::Sprite pieces_sprite(pieces_texture);
 
     sf::Event event;
+
+    // Board
     Board board(
         &window,
         50,
@@ -50,10 +30,28 @@ int main()
         {219,200,188}
     );
 
+    // Pieces
+    std::vector<Piece> pieces;
+
+    for(int x = 0; x < 6; ++x)
+    {
+        for(int y = 0; y < 6; ++y)
+        {
+            pieces_sprite.setScale(sf::Vector2f(0.25f, 0.25f));
+            pieces_sprite.setTextureRect(sf::IntRect(200 * y, 200 * x, 200, 200));
+
+            Piece current_piece(
+                pieces_sprite,
+                window
+            );
+
+            pieces.push_back(current_piece);
+        }
+    }
+
     while (window.isOpen())
     {
         // Process events
-        sf::Event event;
         while (window.pollEvent(event))
         {
             // Close window: exit
@@ -61,21 +59,12 @@ int main()
                 window.close();
         }
 
-        // if (event.type == sf::Event::MouseButtonPressed)
-        // {
-        //     if (event.mouseButton.button == sf::Mouse::Right)
-        //     {
-        //         std::cout << "the right button was pressed" << std::endl;
-        //         std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-        //         std::cout << "mouse y: " << event.mouseButton.y << std::endl;
-        //     }
-        // }
-
         // Clear screen
         window.clear();
 
         // Render things
         board.display();
+        pieces[2].display();
 
         if (event.type == sf::Event::Resized)
         {
@@ -85,16 +74,13 @@ int main()
         }
 
         // Draw the sprite
-        // sprite.setScale(sf::Vector2f(0.25f, 0.25f));
-        // sprite.setTextureRect(sf::IntRect(0, 0, 200, 200));
+        // 
         // window.draw(sprite);
         // Draw the string
         // window.draw(text);
         // Update the window
         window.display();
         // window.setView(window.getView());
-
-        auto view = window.getViewport(window.getView());
         // std::cout << view.width << "\n";
     }
 
