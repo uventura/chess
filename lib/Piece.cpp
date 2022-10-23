@@ -5,10 +5,13 @@ Piece::Piece(
     sf::RenderWindow& window,
     int x,
     int y,
-    std::string name
+    std::string name,
+    std::string group
 ):
-m_piece(piece), m_window(window), pos_x(x), pos_y(y), m_name(name)
-{}
+m_piece(piece), m_window(window), pos_x(x), pos_y(y), m_name(name), m_group(group)
+{
+    move(x, y);
+}
 
 void Piece::display()
 {

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -11,6 +13,7 @@ class Piece
         int pos_x, pos_y;
 
         std::string m_name;
+        std::string m_group;
 
     public:
         Piece(
@@ -18,7 +21,8 @@ class Piece
             sf::RenderWindow& window,
             int x = 0,
             int y = 0,
-            std::string name = "none"
+            std::string name = "none",
+            std::string group = "none"
         );
 
         void display();
