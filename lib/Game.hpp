@@ -3,6 +3,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <array>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -15,8 +16,8 @@
 class Game
 {
     private:
-        std::map<std::string, std::unique_ptr<Piece>> m_white_pieces;
-        std::map<std::string, std::unique_ptr<Piece>> m_black_pieces;
+        std::map<std::string, std::shared_ptr<Piece>> m_white_pieces;
+        std::map<std::string, std::shared_ptr<Piece>> m_black_pieces;
 
         std::unique_ptr<Board> m_board;
         sf::Texture m_pieces_texture;
@@ -26,7 +27,7 @@ class Game
         sf::RenderWindow& m_window;
         sf::Sprite m_pieces_sprite;
 
-        std::unique_ptr<Piece> pieces[8][8];
+        std::shared_ptr<Piece> pieces[8][8];
 
         void loadPieces();
         void loadPiece(
@@ -41,6 +42,7 @@ class Game
 
         int counter = 0;
 
+        int ux = -1, uy = -1, vx, vy;
     public:
         Game(sf::RenderWindow& window);
         void display();

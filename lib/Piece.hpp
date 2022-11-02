@@ -3,6 +3,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <array>
 #include <string>
 #include <iostream>
 
@@ -30,8 +31,9 @@ class Piece
         );
 
         void display();
-        void update(sf::Event& event);
+        std::array<int, 2> update(sf::Event& event);
         void move();
+        inline void setPosition(int x, int y){pos_x = x;pos_y = y;};
 
         bool is_moving;
 };

@@ -31,7 +31,23 @@ void Game::update(sf::Event& event)
         {
             if(pieces[i][j] != nullptr)
             {
-                pieces[i][j]->update(event);
+                std::array<int, 2> positions = pieces[i][j]->update(event);
+
+                if(positions[0] != -1)
+                {
+                    pieces[i][j]->setPosition(positions[0], positions[1]);
+
+                    int x = positions[0] / 50;
+                    int y = positions[1] / 50;
+
+                    if(pieces[y][x] != nullptr)
+                    {
+                        std::cout << "Piece Killed!\n";
+                    }
+
+                    pieces[y][x] = std::make_shared<Piece>(*pieces[i][j]);
+                    pieces[i][j] = nullptr;
+                }
             }
         }
     }
@@ -70,11 +86,11 @@ void Game::loadPieces()
 
     for(int i = 0; i < 8; ++i)
     {
-        loadPiece(1, i, pieces_enum::PAWN * 200, 0, "pawn", "white");
-        loadPiece(6, i, pieces_enum::PAWN * 200, 200, "pawn", "black");
+        loadPiece(6, i, pieces_enum::PAWN * 200, 0, "pawn", "white");
+        loadPiece(1, i, pieces_enum::PAWN * 200, 200, "pawn", "black");
 
-        loadPiece(0, i, first_line[i] * 200, 0, first_line_names[i], "white");
-        loadPiece(7, i, first_line[i] * 200, 200, first_line_names[i], "black");
+        loadPiece(7, i, first_line[i] * 200, 0, first_line_names[i], "white");
+        loadPiece(0, i, first_line[i] * 200, 200, first_line_names[i], "black");
     }
 }
 
@@ -90,7 +106,7 @@ void Game::loadPiece(
     m_pieces_sprite.setScale(sf::Vector2f(0.25f, 0.25f));
     m_pieces_sprite.setTextureRect(sf::IntRect(map_x, map_y, 200, 200));
 
-    pieces[line][row] = std::unique_ptr<Piece>(
+    pieces[line][row] = std::shared_ptr<Piece>(
         new Piece(m_pieces_sprite, m_window, row * 50, line * 50, name, group)
     );
 }

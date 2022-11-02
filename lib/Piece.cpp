@@ -27,10 +27,8 @@ void Piece::display()
     m_window.draw(m_piece);
 }
 
-void Piece::update(sf::Event& event)
+std::array<int, 2> Piece::update(sf::Event& event)
 {
-    // m_event = event;
-
     if(event.type == sf::Event::MouseButtonPressed
     && event.mouseButton.button == sf::Mouse::Left
     && event.mouseButton.x >= pos_x && event.mouseButton.x < pos_x + 50
@@ -39,12 +37,11 @@ void Piece::update(sf::Event& event)
     {
         is_moving = true;
     }
-    if(event.type == sf::Event::MouseButtonReleased)
+    else if(event.type == sf::Event::MouseButtonReleased && is_moving)
     {
-        pos_x = old_x;
-        pos_y = old_y;
-
         is_moving = false;
+
+        return {old_x, old_y};
     }
 
     if(is_moving)
@@ -58,6 +55,8 @@ void Piece::update(sf::Event& event)
         old_x = (pos_x < interval_x + 50 ? interval_x : interval_x + 50);
         old_y = (pos_y < interval_y + 50 ? interval_y : interval_y + 50);
     }
+
+    return {-1, -1};
 }
 
 void Piece::move()
