@@ -35,13 +35,16 @@ std::array<int, 2> Piece::update(sf::Event& event)
     && event.mouseButton.y >= pos_y && event.mouseButton.y < pos_y + 50
     )
     {
+        std::array<int, 2> positions = normalize(pos_x, pos_y);
+        old_x = positions[0];
+        old_y = positions[1];
+
         is_moving = true;
     }
     else if(event.type == sf::Event::MouseButtonReleased && is_moving)
     {
         is_moving = false;
-
-        return {old_x, old_y};
+        return normalize(pos_x, pos_y);
     }
 
     if(is_moving)
@@ -49,11 +52,6 @@ std::array<int, 2> Piece::update(sf::Event& event)
         sf::Vector2i position = sf::Mouse::getPosition(m_window);
         pos_x = position.x;
         pos_y = position.y;
-
-        int interval_x = (int)(pos_x/100) * 100;
-        int interval_y = (int)(pos_y/100) * 100;
-        old_x = (pos_x < interval_x + 50 ? interval_x : interval_x + 50);
-        old_y = (pos_y < interval_y + 50 ? interval_y : interval_y + 50);
     }
 
     return {-1, -1};
@@ -67,4 +65,14 @@ void Piece::move()
         m_piece.setOrigin(100, 100);
     else
         m_piece.setOrigin(0, 0);
+}
+
+std::array<int, 2> Piece::normalize(int x, int y)
+{
+    int interval_x = (int)(x/100) * 100;
+    int interval_y = (int)(y/100) * 100;
+    int current_x = (x < interval_x + 50 ? interval_x : interval_x + 50);
+    int current_y = (y < interval_y + 50 ? interval_y : interval_y + 50);
+
+    return {current_x, current_y};
 }

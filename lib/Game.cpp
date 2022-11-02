@@ -40,13 +40,17 @@ void Game::update(sf::Event& event)
                     int x = positions[0] / 50;
                     int y = positions[1] / 50;
 
-                    if(pieces[y][x] != nullptr)
+                    if((pieces[y][x] != nullptr
+                    && pieces[y][x]->getGroup() != pieces[i][j]->getGroup())
+                    || (pieces[y][x] == nullptr))
                     {
-                        std::cout << "Piece Killed!\n";
+                        pieces[y][x] = std::make_shared<Piece>(*pieces[i][j]);
+                        pieces[i][j] = nullptr;
                     }
-
-                    pieces[y][x] = std::make_shared<Piece>(*pieces[i][j]);
-                    pieces[i][j] = nullptr;
+                    else
+                    {
+                        pieces[i][j]->resetPosition();
+                    }
                 }
             }
         }

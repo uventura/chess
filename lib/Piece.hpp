@@ -19,7 +19,7 @@ class Piece
 
         int old_x, old_y;
 
-        // sf::Event& m_event;
+        std::array<int, 2> normalize(int x, int y);
     public:
         Piece(
             sf::Sprite piece,
@@ -34,6 +34,8 @@ class Piece
         std::array<int, 2> update(sf::Event& event);
         void move();
         inline void setPosition(int x, int y){pos_x = x;pos_y = y;};
+        inline void resetPosition(){pos_x = old_x; pos_y = old_y;};
+        inline std::string getGroup(){return m_group;};
 
         bool is_moving;
 };
