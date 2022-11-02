@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <string>
+#include <iostream>
 
 class Piece
 {
@@ -15,6 +16,9 @@ class Piece
         std::string m_name;
         std::string m_group;
 
+        int old_x, old_y;
+
+        // sf::Event& m_event;
     public:
         Piece(
             sf::Sprite piece,
@@ -26,5 +30,8 @@ class Piece
         );
 
         void display();
-        void move(int pos_x, int pos_y);
+        void update(sf::Event& event);
+        void move();
+
+        bool is_moving;
 };

@@ -28,6 +28,8 @@ int main()
                 window.close();
         }
 
+        game.update(event);
+
         // Clear screen
         window.clear();
 

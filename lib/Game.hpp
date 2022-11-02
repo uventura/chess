@@ -39,7 +39,10 @@ class Game
         );
         void displayPieces();
 
+        int counter = 0;
+
     public:
         Game(sf::RenderWindow& window);
         void display();
+        void update(sf::Event& event);
 };

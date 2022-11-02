@@ -23,6 +23,20 @@ void Game::display()
     displayPieces();
 }
 
+void Game::update(sf::Event& event)
+{
+    for(int i = 0; i < 8; ++i)
+    {
+        for(int j = 0; j < 8; ++j)
+        {
+            if(pieces[i][j] != nullptr)
+            {
+                pieces[i][j]->update(event);
+            }
+        }
+    }
+}
+
 void Game::loadPieces()
 {
     for(int i = 0; i < 8; ++i)
@@ -77,7 +91,7 @@ void Game::loadPiece(
     m_pieces_sprite.setTextureRect(sf::IntRect(map_x, map_y, 200, 200));
 
     pieces[line][row] = std::unique_ptr<Piece>(
-        new Piece(m_pieces_sprite, m_window, row * 50, line * 50)
+        new Piece(m_pieces_sprite, m_window, row * 50, line * 50, name, group)
     );
 }
 
